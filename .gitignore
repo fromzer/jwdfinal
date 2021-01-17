@@ -1,0 +1,16 @@
+﻿#############
+## Idea
+#############
+target/
+doc/
+logs/
+.idea/
+.repository/
+*.iml
+*.iws
+*.class
+*.info
+*.jar
+mail.properties
+
+
