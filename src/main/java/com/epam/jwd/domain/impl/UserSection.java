@@ -3,11 +3,29 @@ package com.epam.jwd.domain.impl;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * UserSection class represents ManyToMany field
+ * User can belong to many sections and Section can have many users
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class UserSection extends AbstractBaseEntity implements Serializable {
     private static final long serialVersionUID = 4391017142853002095L;
 
+    /**
+     * User ID
+     */
     private Long userId;
+
+    /**
+     * Section ID
+     */
     private Long sectionId;
+
+    /**
+     * State of user request
+     */
     private State state;
 
     public Long getUserId() {

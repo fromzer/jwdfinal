@@ -4,6 +4,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.util.regex.Pattern;
 
+/**
+ * Wrapper class for request used to strip parameters if xss attack detected
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class XSSRequestWrapper extends HttpServletRequestWrapper {
 
     private static Pattern[] patterns = new Pattern[]{

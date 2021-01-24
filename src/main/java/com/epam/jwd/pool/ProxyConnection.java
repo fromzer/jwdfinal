@@ -8,8 +8,18 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+/**
+ * {@code ProxyConnection} class is wrapper for {@code Connection} instance.
+ * 
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class ProxyConnection implements Connection {
     public static Logger logger = LoggerFactory.getLogger(ProxyConnection.class);
+
+    /**
+     * DB connection instance
+     */
     private Connection connection;
 
     ProxyConnection(Connection connection) {
@@ -56,6 +66,9 @@ public class ProxyConnection implements Connection {
         connection.rollback();
     }
 
+    /**
+     * Release DB {@code Connection} object and JDBC resources
+     */
     public void realClose() {
         try {
             connection.close();
@@ -64,6 +77,10 @@ public class ProxyConnection implements Connection {
         }
     }
 
+    /**
+     * Return connection back to pool instead of releasing DB {@code Connection} object
+     * To release {@code Connection} object, use {@link #realClose()} method
+     */
     @Override
     public void close() {
         try {

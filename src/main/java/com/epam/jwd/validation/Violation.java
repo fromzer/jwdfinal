@@ -1,7 +1,20 @@
 package com.epam.jwd.validation;
 
+/**
+ * Representation of violation-message
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class Violation {
+    /**
+     * Checked field
+     */
     private String field;
+
+    /**
+     * Violation message
+     */
     private String message;
 
     public Violation(String field, String message) {

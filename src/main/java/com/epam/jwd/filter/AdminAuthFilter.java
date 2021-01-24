@@ -10,11 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Provides protection against executing admin commands and accessing admin pages
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 @WebFilter("/admin")
 public class AdminAuthFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
+    public void init(FilterConfig filterConfig) {
     }
 
     @Override

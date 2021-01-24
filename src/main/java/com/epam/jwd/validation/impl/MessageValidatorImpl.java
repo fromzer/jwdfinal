@@ -10,6 +10,12 @@ import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Message validator implementation for creating and editing message data
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class MessageValidatorImpl implements MessageValidator {
     private static MessageValidatorImpl instance;
     private static ReentrantLock reentrantLock = new ReentrantLock();

@@ -12,6 +12,12 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * Class implements interface Command, used to delete user request to section
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class DeleteRequestCommand implements Command {
     private static final Logger logger = LoggerFactory.getLogger(DeleteRequestCommand.class);
     public static ResponseContext REQUEST_LIST_PAGE = new ResponseContext() {

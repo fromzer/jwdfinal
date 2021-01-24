@@ -5,11 +5,20 @@ import com.epam.jwd.exception.UnknownEntityException;
 
 import java.io.Serializable;
 
+/**
+ * State class describes states of requests
+ * 
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public enum State implements BaseEntity, Serializable {
     CONSIDERED(1L), REJECTED(2L), CONFIRMED(3L);
 
     private static final long serialVersionUID = -1833926400724649771L;
 
+    /**
+     * State ID
+     */    
     private Long id;
 
     State(Long id) {

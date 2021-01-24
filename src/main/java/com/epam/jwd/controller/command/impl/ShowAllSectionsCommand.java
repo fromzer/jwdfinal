@@ -13,6 +13,12 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * Class implements interface Command, used to return all sections from database
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class ShowAllSectionsCommand implements Command {
     public static final ResponseContext SECTION_LIST_PAGE = new ResponseContext() {
         @Override

@@ -11,6 +11,13 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+/**
+ * Class implements interface Command, used to get main page
+ * return all actual conferences from database, whose end date is greater than the current date
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class MainCommand implements Command {
     public static final ResponseContext MAIN_PAGE = new ResponseContext() {
         @Override

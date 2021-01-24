@@ -10,6 +10,12 @@ import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * User validator implementation for login process
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class UserValidatorLogInImpl implements UserValidator {
 
     private static final ReentrantLock reentrantLock = new ReentrantLock();

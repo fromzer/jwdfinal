@@ -9,6 +9,12 @@ import com.epam.jwd.service.impl.ConferenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Class implements interface Command, used by administrator to delete conference
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class DeleteConferenceCommand implements Command {
     private static final Logger logger = LoggerFactory.getLogger(DeleteConferenceCommand.class);
     public static ResponseContext EDIT_CONFERENCE_PAGE = new ResponseContext() {

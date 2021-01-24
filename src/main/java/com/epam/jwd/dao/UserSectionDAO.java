@@ -17,12 +17,19 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * DAO class represents many to many relation between users and sections
+ * used for working with UserSection objects and modifying data
+ * in corresponding table
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class UserSectionDAO extends AbstractDAO<Long, UserSection> {
     private static final Logger logger = LoggerFactory.getLogger(UserSectionDAO.class);
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final String SQL_SELECT_FIND_ALL = "SELECT us.id, us.user_id, us.section_id, us.state_id FROM users_sections us WHERE state_id = 1 ORDER BY us.id;";
     private static final String SQL_SELECT_FIND_BY_ID = "SELECT us.id, us.user_id, us.section_id, us.state_id FROM users_sections us WHERE us.id = ?;";
-    private static final String SQL_SELECT_FIND_BY_SECTION_ID = "SELECT us.id, us.user_id, us.section_id, us.state_id FROM users_sections us WHERE us.section_id = ?;";
     private static final String SQL_SELECT_FIND_BY_USER_ID = "SELECT us.id, us.user_id, us.section_id, us.state_id FROM users_sections us WHERE us.user_id = ?;";
     private static final String SQL_DELETE_ENTITY = "DELETE FROM users_sections WHERE user_id = ? and section_id = ?;";
     private static final String SQL_CREATE_ENTITY = "INSERT INTO users_sections(user_id, section_id, state_id) VALUES (?, ?, ?);";
@@ -94,21 +101,20 @@ public class UserSectionDAO extends AbstractDAO<Long, UserSection> {
         return result;
     }
 
+    /**
+     * Find all user's sections by user id
+     *
+     * @param id user for which sections are searched
+     * @return List of user's sections
+     * @throws DaoException if fail to find data in DB
+     */
     public List<UserSection> findByUserId(Long id) throws DaoException {
-        return getFindUserOrSectionsId(id, SQL_SELECT_FIND_BY_USER_ID);
-    }
-
-    public List<UserSection> findBySectionId(Long id) throws DaoException {
-        return getFindUserOrSectionsId(id, SQL_SELECT_FIND_BY_SECTION_ID);
-    }
-
-    private List<UserSection> getFindUserOrSectionsId(Long id, String sqlSelectFindByUserId) throws DaoException {
         List<UserSection> userSectionList = new ArrayList<>();
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         try {
-            statement = connection.prepareStatement(sqlSelectFindByUserId);
+            statement = connection.prepareStatement(SQL_SELECT_FIND_BY_USER_ID);
             statement.setLong(1, id);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {

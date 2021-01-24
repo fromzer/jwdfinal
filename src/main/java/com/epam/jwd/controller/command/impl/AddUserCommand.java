@@ -18,6 +18,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * Class implements interface Command, used by administrator to add new user
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class AddUserCommand implements Command {
     public static final ResponseContext LOGIN_PAGE = new ResponseContext() {
         @Override
@@ -88,7 +94,7 @@ public class AddUserCommand implements Command {
                 requestContext.setAttribute("validateResult", result);
                 return REGISTRATION_PAGE;
             }
-        } catch (ServiceException|ValidateException e) {
+        } catch (ServiceException | ValidateException e) {
             logger.warn("User creation error");
             requestContext.setAttribute("error", e.getMessage());
             return ERROR_PAGE;

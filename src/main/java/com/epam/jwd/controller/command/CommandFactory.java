@@ -2,8 +2,20 @@ package com.epam.jwd.controller.command;
 
 import com.epam.jwd.controller.command.impl.*;
 
+/**
+ * Class represents a factory for creating concrete command objects
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class CommandFactory {
 
+    /**
+     * Define the concrete Command object to process client request
+     *
+     * @param command name
+     * @return class implemented interface Command
+     */
     public static Command command(String command) {
         if (command == null) {
             command = "main";

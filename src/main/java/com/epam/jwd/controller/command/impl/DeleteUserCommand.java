@@ -9,7 +9,12 @@ import com.epam.jwd.service.impl.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * Class implements interface Command, used by administrator to delete user
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class DeleteUserCommand implements Command {
     private static final Logger logger = LoggerFactory.getLogger(DeleteUserCommand.class);
     public static ResponseContext USER_LIST_PAGE = new ResponseContext() {

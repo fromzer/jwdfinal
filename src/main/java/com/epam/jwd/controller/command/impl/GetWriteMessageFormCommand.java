@@ -4,6 +4,12 @@ import com.epam.jwd.controller.command.Command;
 import com.epam.jwd.controller.command.RequestContext;
 import com.epam.jwd.controller.command.ResponseContext;
 
+/**
+ * Class implements interface Command, used to get write message page
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class GetWriteMessageFormCommand implements Command {
     public static final ResponseContext WRITE_MESSAGE_PAGE = new ResponseContext() {
         @Override

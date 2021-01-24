@@ -8,6 +8,12 @@ import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * User tag to print violation messages
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class FunctionContainsViolationTag extends TagSupport {
     private Object violationList;
     private String fieldName;

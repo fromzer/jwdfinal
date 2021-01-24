@@ -11,6 +11,12 @@ import com.epam.jwd.service.impl.UserSectionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Class implements interface Command, used by administrator to change user request state
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class ChangeStateRequestCommand implements Command {
     public static final ResponseContext ERROR_PAGE = new ResponseContext() {
         @Override

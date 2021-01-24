@@ -16,6 +16,12 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Class implements interface Command, used by administrator to add new conference
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class AddConferenceCommand implements Command {
     public static final ResponseContext ERROR_PAGE = new ResponseContext() {
         @Override
@@ -56,8 +62,8 @@ public class AddConferenceCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext requestContext) {
         Locale locale = Locale.getDefault();
-        String title = requestContext.getParameter("confTitle");
         String description = requestContext.getParameter("confDescription");
+        String title = requestContext.getParameter("confTitle");
         String[] availableDateStart = requestContext.getParameterValues("dateStart");
         String[] availableDateEnd = requestContext.getParameterValues("dateEnd");
         LocalDate startDate = LocalDate.parse(availableDateStart[0]);

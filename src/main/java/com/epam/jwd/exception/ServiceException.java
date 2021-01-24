@@ -1,5 +1,11 @@
 package com.epam.jwd.exception;
 
+/**
+ * The exception will be thrown service layer
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class ServiceException extends Exception {
     public ServiceException() {
     }

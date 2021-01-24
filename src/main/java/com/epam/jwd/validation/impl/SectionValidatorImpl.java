@@ -10,6 +10,12 @@ import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Section validator implementation for creating and editing section data
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class SectionValidatorImpl implements SectionValidator {
     private static SectionValidatorImpl instance;
     private static final ReentrantLock reentrantLock = new ReentrantLock();

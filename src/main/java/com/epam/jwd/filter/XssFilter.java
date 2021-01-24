@@ -7,10 +7,16 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * Filter used to prevent xss attacks
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 @WebFilter("/*")
 public class XssFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
     }
 
     @Override

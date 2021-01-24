@@ -13,6 +13,12 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * Class implements interface Command, used to join section
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class JoinSectionRequestCommand implements Command {
     private static final Logger logger = LoggerFactory.getLogger(JoinSectionRequestCommand.class);
     public static ResponseContext ERROR_PAGE = new ResponseContext() {

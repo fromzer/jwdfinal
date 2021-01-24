@@ -7,6 +7,12 @@ import com.epam.jwd.domain.impl.User;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * Class implements interface Command, used to get edit user profile page
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class GetEditUserProfileFormCommand implements Command {
     public static final ResponseContext EDIT_PROFILE_PAGE = new ResponseContext() {
         @Override

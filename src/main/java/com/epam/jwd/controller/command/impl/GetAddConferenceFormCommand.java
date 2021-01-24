@@ -4,6 +4,12 @@ import com.epam.jwd.controller.command.Command;
 import com.epam.jwd.controller.command.RequestContext;
 import com.epam.jwd.controller.command.ResponseContext;
 
+/**
+ * Class implements interface Command, used by administrator to get add conference page
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class GetAddConferenceFormCommand implements Command {
     public static ResponseContext CREATE_CONFERENCE_PAGE = new ResponseContext() {
         @Override

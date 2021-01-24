@@ -8,6 +8,12 @@ import com.epam.jwd.service.impl.SectionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Class implements interface Command, used by administrator to get show and edit sections page
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class GetShowAndEditSectionsFormCommand implements Command {
     private static final Logger logger = LoggerFactory.getLogger(GetShowAndEditSectionsFormCommand.class);
     public static ResponseContext ERROR_PAGE = new ResponseContext() {

@@ -2,10 +2,33 @@ package com.epam.jwd.domain.impl;
 
 import java.util.Objects;
 
+/**
+ * Request class describes user's requests to conference
+ * 
+ * 
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class RequestSection {
+
+    /**
+     * Conference to be requested
+     */
     private Conference conference;
+
+    /**
+     * Section to be requested
+     */
     private Section section;
+
+    /**
+     * UserSection 
+     */    
     private UserSection userSection;
+
+    /**
+     * User
+     */    
     private User user;
 
     public Conference getConference() {

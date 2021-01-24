@@ -15,18 +15,41 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
-
+/**
+ * ConnectionPool is used for creating and managing DB connections
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class ConnectionPool {
-    private static final ReentrantLock reentrantLock = new ReentrantLock();
-    private static final AtomicBoolean isCreated = new AtomicBoolean(false);
     private static final Logger logger = LoggerFactory.getLogger(ConnectionPool.class);
+    private static final ReentrantLock reentrantLock = new ReentrantLock();
+
+    /**
+     * Flag indicates that the pool is created.
+     */
+    private static final AtomicBoolean isCreated = new AtomicBoolean(false);
+
+    /**
+     * Instance of ConnectionPool - Singleton
+     */
     private static ConnectionPool instance;
+
+    /**
+     * DB connections storage
+     */
     private BlockingQueue<ProxyConnection> connectionQueue;
 
     private ConnectionPool() {
         init();
     }
 
+
+    /**
+     * Get {@code ConnectionPool} instance
+     *
+     * @return instance of {@code ConnectionPool} class
+     */
     public static ConnectionPool getInstance() {
         if (!isCreated.get()) {
             reentrantLock.lock();
@@ -42,6 +65,11 @@ public class ConnectionPool {
         return instance;
     }
 
+    /**
+     * Get {@code ProxyConnection} instance from pool storage
+     *
+     * @return instance of {@code ProxyConnection}
+     */
     public ProxyConnection getConnection() {
         ProxyConnection connection = null;
         try {
@@ -52,6 +80,9 @@ public class ConnectionPool {
         return connection;
     }
 
+    /**
+     * Close all connections in pool storage
+     */
     public void destroyConnection() {
         for (int i = 0; i < connectionQueue.size(); i++) {
             try {
@@ -62,12 +93,21 @@ public class ConnectionPool {
         }
     }
 
+
+    /**
+     * Return {@code ProxyConnection} instance back to pool storage
+     *
+     * @param connection to be returned
+     */
     public void returnConnection(ProxyConnection connection) {
         if (connection != null) {
             connectionQueue.offer(connection);
         }
     }
 
+    /**
+     * Read ConnectionPool properties  and create connections for pool storage
+     */
     private void init() {
         DatabaseProperties properties = PropertyReaderUtil.readDBProperties();
         String url = properties.getDbURL();
@@ -90,6 +130,9 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Create connection instance
+     */
     private Connection createConnection(String url, String user, String password) throws SQLException {
         DriverManager.registerDriver(new Driver());
         return DriverManager.getConnection(url, user, password);

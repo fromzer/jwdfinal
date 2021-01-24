@@ -8,8 +8,12 @@ import com.epam.jwd.service.impl.UserSectionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.HttpSession;
-
+/**
+ * Class implements interface Command, used by administrator to return all new users' requests from database
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class ShowNewRequestsCommand implements Command {
     private static final Logger logger = LoggerFactory.getLogger(ShowNewRequestsCommand.class);
     public static ResponseContext ERROR_PAGE = new ResponseContext() {

@@ -10,10 +10,19 @@ import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Conference validator implementation for creating and editing conference data
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class ConferenceValidatorImpl implements ConferenceValidator {
-    private static ConferenceValidatorImpl instance;
     private static final ReentrantLock reentrantLock = new ReentrantLock();
     private static final AtomicBoolean isCreated = new AtomicBoolean(false);
+    private static ConferenceValidatorImpl instance;
+
+    private ConferenceValidatorImpl() {
+    }
 
     public static ConferenceValidatorImpl getInstance() {
         if (!isCreated.get()) {
@@ -28,9 +37,6 @@ public class ConferenceValidatorImpl implements ConferenceValidator {
             }
         }
         return instance;
-    }
-
-    private ConferenceValidatorImpl() {
     }
 
     @Override

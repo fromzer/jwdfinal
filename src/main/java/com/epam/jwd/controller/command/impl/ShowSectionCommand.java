@@ -8,6 +8,12 @@ import com.epam.jwd.service.impl.SectionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Class implements interface Command, used to return all users from database
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class ShowSectionCommand implements Command {
     public static final ResponseContext SECTION_PAGE = new ResponseContext() {
         @Override

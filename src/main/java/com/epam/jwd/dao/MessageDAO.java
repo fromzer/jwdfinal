@@ -15,6 +15,13 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * DAO class used for working with Message objects and modifying data
+ * in corresponding table
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class MessageDAO extends AbstractDAO<Long, Message> {
     private static final Logger logger = LoggerFactory.getLogger(MessageDAO.class);
     private static final String SQL_SELECT_FIND_ALL_NEW = "SELECT m.id, m.topic, m.message, m.user_id, m.isAnswered FROM messages m WHERE m.isAnswered = false ORDER BY m.id DESC;";
@@ -25,7 +32,7 @@ public class MessageDAO extends AbstractDAO<Long, Message> {
     private static final String SQL_UPDATE_ENTITY = "UPDATE messages SET isAnswered=? WHERE id = ?;";
     private static final ReentrantLock reentrantLock = new ReentrantLock();
     private static final AtomicBoolean isCreated = new AtomicBoolean(false);
-    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static MessageDAO instance;
 
     private MessageDAO() {
@@ -89,6 +96,13 @@ public class MessageDAO extends AbstractDAO<Long, Message> {
         return result;
     }
 
+    /**
+     * Find all entries by id in table
+     *
+     * @param userId user for which messages are searched
+     * @return List of messages
+     * @throws DaoException if fail to find data in DB
+     */
     public List<Message> findAllMessageByUserId(Long userId) throws DaoException {
         List<Message> entities = new ArrayList<>();
         PreparedStatement statement = null;
@@ -137,7 +151,6 @@ public class MessageDAO extends AbstractDAO<Long, Message> {
                     .setTopic(resultSet.getString(2))
                     .setDescription(resultSet.getString(3))
                     .setUserId(resultSet.getLong(4))
-                    .setAnswered(resultSet.getBoolean(5))
                     .build();
         } catch (SQLException e) {
             logger.warn("Error create entity");

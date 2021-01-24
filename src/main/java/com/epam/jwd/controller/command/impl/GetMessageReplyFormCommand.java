@@ -8,6 +8,12 @@ import com.epam.jwd.service.impl.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Class implements interface Command, used by administrator to get message reply page
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class GetMessageReplyFormCommand implements Command {
     private static final Logger logger = LoggerFactory.getLogger(GetMessageReplyFormCommand.class);
     public static ResponseContext SHOW_MESSAGE_REPLY_PAGE = new ResponseContext() {

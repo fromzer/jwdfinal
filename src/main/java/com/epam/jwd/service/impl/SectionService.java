@@ -12,12 +12,19 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Service class is used for working with Section objects via DAO layer
+ * classes
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class SectionService implements Service<Section> {
     private static final Logger logger = LoggerFactory.getLogger(SectionService.class);
     private static final ReentrantLock reentrantLock = new ReentrantLock();
     private static final AtomicBoolean isCreated = new AtomicBoolean(false);
     private static SectionService instance;
-    private SectionDAO sectionDAO = SectionDAO.getInstance();
+    private final SectionDAO sectionDAO = SectionDAO.getInstance();
 
     private SectionService() {
     }
@@ -37,15 +44,13 @@ public class SectionService implements Service<Section> {
         return instance;
     }
 
-    public List<Section> findAllSection() throws ServiceException {
-        try {
-            return sectionDAO.findAll();
-        } catch (DaoException e) {
-            logger.warn("Service findAllSection error");
-            throw new ServiceException("Service findAllSection error: " + e);
-        }
-    }
-
+    /**
+     * Get section by id
+     *
+     * @param id section id
+     * @return Section object
+     * @throws ServiceException if fail to retrieve data from DB
+     */
     public Section findSectionById(Long id) throws ServiceException {
         try {
             return sectionDAO.findEntityById(id).orElseThrow();

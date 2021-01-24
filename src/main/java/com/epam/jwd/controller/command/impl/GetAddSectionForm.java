@@ -8,6 +8,12 @@ import com.epam.jwd.service.impl.ConferenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Class implements interface Command, used by administrator to get add section page
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class GetAddSectionForm implements Command {
     private static final Logger logger = LoggerFactory.getLogger(GetAddSectionForm.class);
     public static ResponseContext CREATE_SECTION_PAGE = new ResponseContext() {

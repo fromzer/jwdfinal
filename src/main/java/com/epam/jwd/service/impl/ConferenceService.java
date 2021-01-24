@@ -12,12 +12,19 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Service class is used for working with Conference objects via DAO layer
+ * classes
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class ConferenceService implements Service<Conference> {
     private static final Logger logger = LoggerFactory.getLogger(ConferenceService.class);
     private static final ReentrantLock reentrantLock = new ReentrantLock();
     private static final AtomicBoolean isCreated = new AtomicBoolean(false);
     private static ConferenceService instance;
-    private ConferenceDAO conferenceDAO = ConferenceDAO.getInstance();
+    private final ConferenceDAO conferenceDAO = ConferenceDAO.getInstance();
 
     private ConferenceService() {
     }
@@ -37,6 +44,12 @@ public class ConferenceService implements Service<Conference> {
         return instance;
     }
 
+    /**
+     * Get all conferences
+     *
+     * @return List of Conferences
+     * @throws ServiceException if fail to retrieve data from DB
+     */
     public List<Conference> findAllConference() throws ServiceException {
         try {
             return conferenceDAO.findAll();
@@ -46,6 +59,13 @@ public class ConferenceService implements Service<Conference> {
         }
     }
 
+    /**
+     * Get conference by id
+     *
+     * @param id conference id
+     * @return Conference object
+     * @throws ServiceException if fail to retrieve data from DB
+     */
     public Conference findConferenceById(Long id) throws ServiceException {
         try {
             return conferenceDAO.findEntityById(id).orElseThrow();
@@ -55,6 +75,12 @@ public class ConferenceService implements Service<Conference> {
         }
     }
 
+    /**
+     * Get number of conferences
+     *
+     * @return number of conferences stored in DB
+     * @throws ServiceException if fail to retrieve data from DB
+     */
     public Long getNumberOfConferences() throws ServiceException {
         try {
             return conferenceDAO.findAmountOfConferences();
@@ -64,6 +90,14 @@ public class ConferenceService implements Service<Conference> {
         }
     }
 
+    /**
+     * Get some of the conferences. Used for pagination
+     *
+     * @param currentPage
+     * @param recordsPerPage
+     * @return List of conferences
+     * @throws ServiceException if fail to retrieve data from DB
+     */
     public List<Conference> findConferenceByLimit(Long currentPage, Long recordsPerPage) throws ServiceException {
         Long position = currentPage * recordsPerPage - recordsPerPage;
         try {

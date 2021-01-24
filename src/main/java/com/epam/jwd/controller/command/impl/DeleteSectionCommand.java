@@ -9,7 +9,12 @@ import com.epam.jwd.service.impl.SectionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+/**
+ * Class implements interface Command, used by administrator to delete section
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class DeleteSectionCommand implements Command {
     private static final Logger logger = LoggerFactory.getLogger(DeleteSectionCommand.class);
     public static ResponseContext EDIT_SECTIONS_PAGE = new ResponseContext() {

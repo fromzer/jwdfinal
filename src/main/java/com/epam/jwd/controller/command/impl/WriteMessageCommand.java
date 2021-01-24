@@ -16,6 +16,12 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Class implements interface Command, used to ask administrator
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class WriteMessageCommand implements Command {
     public static final ResponseContext MAIN_PAGE = new ResponseContext() {
         @Override

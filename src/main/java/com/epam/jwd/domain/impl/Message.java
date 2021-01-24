@@ -3,12 +3,35 @@ package com.epam.jwd.domain.impl;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Message class describes the message from a user to administrator
+ * 
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
+
 public class Message extends AbstractBaseEntity implements Serializable {
     private static final long serialVersionUID = -5281001470855258467L;
 
+    /**
+     * Message topic
+     */
     private String topic;
+	
+	    /**
+     * Message text
+     */
     private String description;
+	
+    /**
+     * Message creator ID
+     */
     private Long userId;
+	
+	
+    /**
+     * Message state
+     */
     private boolean isAnswered;
 
     public String getTopic() {

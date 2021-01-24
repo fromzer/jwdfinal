@@ -4,11 +4,28 @@ import java.io.Serializable;
 import java.util.Objects;
 
 
+/**
+ * Section class describes sections of conference
+ * 
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class Section extends AbstractBaseEntity implements Serializable {
     private static final long serialVersionUID = 4882087911198229020L;
 
+    /**
+     * Section title
+     */
     private String title;
+
+    /**
+     * Section description
+     */
     private String description;
+
+    /**
+     * Conference the section belongs to
+     */
     private Long conferenceId;
 
     public String getTitle() {

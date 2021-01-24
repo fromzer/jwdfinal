@@ -8,6 +8,12 @@ import com.epam.jwd.service.impl.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Class implements interface Command, used by administrator to return all users from database
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class ShowAllUsersCommand implements Command {
     public static final ResponseContext SHOW_ALL_USER = new ResponseContext() {
         @Override

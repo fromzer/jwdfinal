@@ -5,11 +5,20 @@ import com.epam.jwd.exception.UnknownEntityException;
 
 import java.io.Serializable;
 
+ /**
+ * UserRole class describes roles of users
+ * 
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public enum UserRole implements BaseEntity, Serializable {
     ADMIN(1L), USER(2L);
 
     private static final long serialVersionUID = -4815531461424481102L;
 
+    /**
+     * UserRole ID
+     */    
     private Long id;
 
     UserRole(Long id) {

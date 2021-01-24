@@ -6,6 +6,12 @@ import com.epam.jwd.controller.command.ResponseContext;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * Class implements interface Command, used to log out
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class LogoutCommand implements Command {
     public static final ResponseContext MAIN_PAGE = new ResponseContext() {
         @Override

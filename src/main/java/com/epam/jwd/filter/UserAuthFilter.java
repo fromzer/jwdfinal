@@ -9,10 +9,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Provides protection against executing commands and accessing pages from unauthenticated users
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 @WebFilter("/user")
 public class UserAuthFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 

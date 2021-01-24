@@ -18,6 +18,12 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Class implements interface Command, used by administrator to send message
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class SendMessageCommand implements Command {
     private static final Logger logger = LoggerFactory.getLogger(SendMessageCommand.class);
     public static ResponseContext ERROR_PAGE = new ResponseContext() {

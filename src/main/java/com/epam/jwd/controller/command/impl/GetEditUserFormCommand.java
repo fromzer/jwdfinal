@@ -8,6 +8,12 @@ import com.epam.jwd.service.impl.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Class implements interface Command, used by administrator to get edit user page
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class GetEditUserFormCommand implements Command {
     public static final ResponseContext EDIT_USER_PAGE = new ResponseContext() {
         @Override

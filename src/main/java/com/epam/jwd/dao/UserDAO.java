@@ -17,6 +17,13 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * DAO class used for working with User objects and modifying data
+ * in corresponding table
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class UserDAO extends AbstractDAO<Long, User> {
     private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
     private static final String SQL_SELECT_FIND_ALL =
@@ -33,7 +40,7 @@ public class UserDAO extends AbstractDAO<Long, User> {
     private static final String SQL_UPDATE_WITHOUT_PASSWORD_ENTITY = "UPDATE app_user SET first_name=?, last_name=?, email=?, role_id=? WHERE id=?;";
     private static final ReentrantLock reentrantLock = new ReentrantLock();
     private static final AtomicBoolean isCreated = new AtomicBoolean(false);
-    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static UserDAO instance;
 
     private UserDAO() {
@@ -54,6 +61,13 @@ public class UserDAO extends AbstractDAO<Long, User> {
         return instance;
     }
 
+    /**
+     * Find entry by login in table
+     *
+     * @param login
+     * @return Optional User
+     * @throws DaoException if fail to find data in DB
+     */
     public Optional<User> findEntityByLogin(String login) throws DaoException {
         User entity;
         PreparedStatement statement = null;
@@ -132,6 +146,13 @@ public class UserDAO extends AbstractDAO<Long, User> {
         return result;
     }
 
+    /**
+     * Update all user object fields but password in table
+     *
+     * @param entity user to be updated
+     * @return Optional User
+     * @throws DaoException if fail to find data in DB
+     */
     public boolean updateWithoutPassword(User entity) throws DaoException {
         boolean result;
         PreparedStatement statement = null;
@@ -157,6 +178,13 @@ public class UserDAO extends AbstractDAO<Long, User> {
         return result;
     }
 
+    /**
+     * Find out whether user with such login exists in table
+     *
+     * @param login
+     * @return true if user exists
+     * @throws DaoException if an error occurred during sql statement execution
+     */
     public boolean isExistUser(String login) throws DaoException {
         boolean result;
         PreparedStatement statement = null;
@@ -179,6 +207,13 @@ public class UserDAO extends AbstractDAO<Long, User> {
         return result;
     }
 
+    /**
+     * Find user password by login in table
+     *
+     * @param login
+     * @return Optional password
+     * @throws DaoException if fail to find data in DB
+     */
     public Optional<String> findPasswordByLogin(String login) throws DaoException {
         String pass = null;
         PreparedStatement statement = null;

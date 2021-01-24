@@ -9,13 +9,26 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
 
+/**
+ * Util for sending emails to users
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class EmailSender {
     private static Logger logger = LoggerFactory.getLogger(EmailSender.class);
 
     private EmailSender() {
     }
 
-    public static void send(String topic, String text, String from) {
+    /**
+     * Send email to user
+     *
+     * @param topic     email topic
+     * @param text      email text
+     * @param userEmail user email
+     */
+    public static void send(String topic, String text, String userEmail) {
         Properties properties = new Properties();
         try {
             properties.load(EmailSender.class.getResourceAsStream("/mail.properties"));
@@ -36,7 +49,7 @@ public class EmailSender {
             message.setFrom(user);
             message.setSubject(topic);
             message.setText(text, "UTF-8");
-            message.setRecipients(Message.RecipientType.TO, from);
+            message.setRecipients(Message.RecipientType.TO, userEmail);
             message.setSentDate(new Date());
             Transport.send(message);
         } catch (MessagingException e) {

@@ -1,5 +1,11 @@
 package com.epam.jwd.context;
 
+/**
+ * Encapsulates all db properties
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class DatabaseProperties {
     private String dbURL;
     private String dbUser;

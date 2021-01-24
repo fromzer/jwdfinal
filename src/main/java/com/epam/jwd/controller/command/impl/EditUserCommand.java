@@ -20,6 +20,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * Class implements interface Command, used by administrator to edit user
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class EditUserCommand implements Command {
     public static final ResponseContext EDIT_USER_PAGE = new ResponseContext() {
         @Override

@@ -7,6 +7,12 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+/**
+ * Used for initializing connection pool when the application starts
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class ApplicationContextListener implements ServletContextListener {
     private static final Logger logger = LoggerFactory.getLogger(ApplicationContextListener.class);
 

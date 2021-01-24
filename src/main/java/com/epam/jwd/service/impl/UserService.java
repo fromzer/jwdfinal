@@ -14,13 +14,19 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
-
+/**
+ * Service class is used for working with User objects via DAO layer
+ * classes
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class UserService implements Service<User> {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private static final ReentrantLock reentrantLock = new ReentrantLock();
     private static final AtomicBoolean isCreated = new AtomicBoolean(false);
     private static UserService instance;
-    private UserDAO userDAO = UserDAO.getInstance();
+    private final UserDAO userDAO = UserDAO.getInstance();
 
     private UserService() {
     }
@@ -40,6 +46,12 @@ public class UserService implements Service<User> {
         return instance;
     }
 
+    /**
+     * Get all app users
+     *
+     * @return List of Users
+     * @throws ServiceException if fail to retrieve data from DB
+     */
     public List<User> findAllUser() throws ServiceException {
         try {
             return userDAO.findAll();
@@ -49,6 +61,13 @@ public class UserService implements Service<User> {
         }
     }
 
+    /**
+     * Get user by id
+     *
+     * @param id user id
+     * @return User object
+     * @throws ServiceException if fail to retrieve data from DB
+     */
     public User findUserById(Long id) throws ServiceException {
         try {
             return userDAO.findEntityById(id).orElseThrow();
@@ -58,6 +77,13 @@ public class UserService implements Service<User> {
         }
     }
 
+    /**
+     * Check the transmitted password with the one stored in DB
+     *
+     * @param requestContext
+     * @return true if passwords are the same
+     * @throws ServiceException if fail to retrieve data from DB
+     */
     public boolean checkPassword(RequestContext requestContext) throws ServiceException {
         String userName = requestContext.getParameter("userName");
         String inputPassword = requestContext.getParameter("inputPassword");
@@ -66,6 +92,13 @@ public class UserService implements Service<User> {
         return passwordByLogin.equals(md5HexPassword);
     }
 
+    /**
+     * Get user by login
+     *
+     * @param login user login
+     * @return User object
+     * @throws ServiceException if fail to retrieve data from DB
+     */
     public User findUserByLogin(String login) throws ServiceException {
         try {
             return userDAO.findEntityByLogin(login).orElseThrow();
@@ -75,7 +108,7 @@ public class UserService implements Service<User> {
         }
     }
 
-    public String findPasswordByLogin(String login) throws ServiceException {
+    private String findPasswordByLogin(String login) throws ServiceException {
         try {
             return userDAO.findPasswordByLogin(login).get();
         } catch (DaoException e) {
@@ -84,6 +117,13 @@ public class UserService implements Service<User> {
         }
     }
 
+    /**
+     * Find out whether user with such login exists
+     *
+     * @param login
+     * @return true if user exists
+     * @throws ServiceException if an error occurred while working with DB
+     */
     public boolean isExistUser(String login) throws ServiceException {
         try {
             return userDAO.isExistUser(login);
@@ -113,6 +153,13 @@ public class UserService implements Service<User> {
         }
     }
 
+    /**
+     * Update all user fields but password
+     *
+     * @param user object
+     * @return true if user is updated
+     * @throws ServiceException if fail to retrieve data from DB
+     */
     public boolean updateWithoutPassword(User user) throws ServiceException {
         try {
             return userDAO.updateWithoutPassword(user);

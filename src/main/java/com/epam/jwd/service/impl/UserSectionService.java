@@ -15,15 +15,22 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Service class is used for working with UserSection objects via DAO layer
+ * classes
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class UserSectionService implements Service<UserSection> {
     private static final Logger logger = LoggerFactory.getLogger(UserSectionService.class);
     private static final ReentrantLock reentrantLock = new ReentrantLock();
     private static final AtomicBoolean isCreated = new AtomicBoolean(false);
     private static UserSectionService instance;
-    private UserSectionDAO userSectionDAO = UserSectionDAO.getInstance();
-    private SectionService sectionService = SectionService.getInstance();
-    private ConferenceService conferenceService = ConferenceService.getInstance();
-    private UserService userService = UserService.getInstance();
+    private final UserSectionDAO userSectionDAO = UserSectionDAO.getInstance();
+    private final SectionService sectionService = SectionService.getInstance();
+    private final ConferenceService conferenceService = ConferenceService.getInstance();
+    private final UserService userService = UserService.getInstance();
 
     private UserSectionService() {
     }
@@ -43,15 +50,13 @@ public class UserSectionService implements Service<UserSection> {
         return instance;
     }
 
-    public List<UserSection> findUserBySectionId(Long id) throws ServiceException {
-        try {
-            return userSectionDAO.findBySectionId(id);
-        } catch (DaoException e) {
-            logger.warn("Service findUserBySectionId error");
-            throw new ServiceException("Service findUserBySectionId error: " + e);
-        }
-    }
-
+    /**
+     * Get all user's sections by user id
+     *
+     * @param id user for which sections are searched
+     * @return List of user's sections
+     * @throws ServiceException if fail to find data in DB
+     */
     public List<UserSection> findSectionByUserId(Long id) throws ServiceException {
         try {
             return userSectionDAO.findByUserId(id);
@@ -61,15 +66,13 @@ public class UserSectionService implements Service<UserSection> {
         }
     }
 
-    public UserSection findUserSectionById(Long id) throws ServiceException {
-        try {
-            return userSectionDAO.findEntityById(id).orElseThrow();
-        } catch (DaoException e) {
-            logger.warn("Service findUserSectionById error");
-            throw new ServiceException("Service findUserSectionById error: " + e);
-        }
-    }
-
+    /**
+     * Get all user requests to sections by user id
+     *
+     * @param id user for which requests are searched
+     * @return List of RequestSection objects
+     * @throws ServiceException if fail to find data in DB
+     */
     public List<RequestSection> findAllUserRequests(Long id) throws ServiceException {
         List<RequestSection> requestSectionList = new ArrayList<>();
         List<UserSection> userSectionList;
@@ -91,6 +94,12 @@ public class UserSectionService implements Service<UserSection> {
         return requestSectionList;
     }
 
+    /**
+     * Get all new user requests to sections
+     *
+     * @return List of RequestSection objects
+     * @throws ServiceException if fail to find data in DB
+     */
     public List<RequestSection> findNewRequests() throws ServiceException {
         List<RequestSection> requestSectionList = new ArrayList<>();
         List<UserSection> userSectionList;
@@ -113,6 +122,12 @@ public class UserSectionService implements Service<UserSection> {
         return requestSectionList;
     }
 
+    /**
+     * Get all user requests to sections by user id. Used for button join/attached
+     *
+     * @return List of UserSections id
+     * @throws ServiceException if fail to find data in DB
+     */
     public List<Long> findRequestsByUserId(Long id) throws ServiceException {
         List<UserSection> userSectionList = findSectionByUserId(id);
         List<Long> sectionIdList = new ArrayList<>();

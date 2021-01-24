@@ -13,6 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Process all requests from users
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 @WebServlet(urlPatterns = {"/home", "/admin", "/user"})
 public class ApplicationController extends HttpServlet {
     @Override

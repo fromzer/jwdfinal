@@ -4,12 +4,33 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * Conference class describes conference web-app entity
+ * 
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class Conference extends AbstractBaseEntity implements Serializable {
     private static final long serialVersionUID = 6368419749896072260L;
 
+    /**
+     * Conference title
+     */
     private String title;
+
+    /**
+     * Conference description
+     */    
     private String description;
+
+    /**
+     * Conference start date
+     */
     private LocalDate dateStart;
+
+    /**
+     * Conference end date
+     */
     private LocalDate dateEnd;
 
     public String getTitle() {

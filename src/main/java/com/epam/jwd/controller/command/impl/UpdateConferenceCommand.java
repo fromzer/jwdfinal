@@ -16,6 +16,12 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Class implements interface Command, used by administrator to update conference info
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class UpdateConferenceCommand implements Command {
     private static final Logger logger = LoggerFactory.getLogger(UpdateConferenceCommand.class);
     public static ResponseContext ERROR_PAGE = new ResponseContext() {

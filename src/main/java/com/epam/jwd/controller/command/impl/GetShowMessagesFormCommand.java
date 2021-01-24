@@ -8,6 +8,12 @@ import com.epam.jwd.service.impl.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Class implements interface Command, used by administrator to get show messages page
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class GetShowMessagesFormCommand implements Command {
     private MessageService messageService = MessageService.getInstance();
     private static final Logger logger = LoggerFactory.getLogger(GetShowMessagesFormCommand.class);

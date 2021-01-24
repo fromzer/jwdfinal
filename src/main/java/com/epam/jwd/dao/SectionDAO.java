@@ -15,6 +15,13 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * DAO class used for working with Section objects and modifying data
+ * in corresponding table
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class SectionDAO extends AbstractDAO<Long, Section> {
 
     private static final Logger logger = LoggerFactory.getLogger(SectionDAO.class);
@@ -26,7 +33,7 @@ public class SectionDAO extends AbstractDAO<Long, Section> {
     private static final String SQL_SELECT_FIND_BY_CONFERENCE_ID = "SELECT sn.id, sn.title, sn.description, sn.conference_id FROM section sn WHERE sn.conference_id = ?;";
     private static final ReentrantLock reentrantLock = new ReentrantLock();
     private static final AtomicBoolean isCreated = new AtomicBoolean(false);
-    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static SectionDAO instance;
 
     private SectionDAO() {
@@ -47,6 +54,13 @@ public class SectionDAO extends AbstractDAO<Long, Section> {
         return instance;
     }
 
+    /**
+     * Find all entries by id in table
+     *
+     * @param id conference for which sections are searched
+     * @return List of sections
+     * @throws DaoException if fail to find data in DB
+     */
     public List<Section> findEntityByConferenceId(Long id) throws DaoException {
         List<Section> sections = new ArrayList<>();
         PreparedStatement statement = null;
@@ -102,6 +116,7 @@ public class SectionDAO extends AbstractDAO<Long, Section> {
             statement = connection.prepareStatement(SQL_UPDATE_ENTITY);
             statement.setString(1, entity.getTitle());
             statement.setString(2, entity.getDescription());
+            statement.setLong(3, entity.getId());
             result = statement.executeUpdate() > 0;
         } catch (SQLException e) {
             logger.warn("Request update execution error.");

@@ -4,10 +4,13 @@ import com.epam.jwd.controller.command.RequestContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
+/**
+ * Class implements RequestContext interface
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class CustomRequestContext implements RequestContext {
     private final HttpServletRequest httpServletRequest;
 
@@ -41,7 +44,7 @@ public class CustomRequestContext implements RequestContext {
     }
 
     @Override
-    public String[] getParameterValues(String date) {
-        return httpServletRequest.getParameterValues(date);
+    public String[] getParameterValues(String data) {
+        return httpServletRequest.getParameterValues(data);
     }
 }

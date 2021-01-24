@@ -4,6 +4,12 @@ import com.epam.jwd.controller.command.Command;
 import com.epam.jwd.controller.command.RequestContext;
 import com.epam.jwd.controller.command.ResponseContext;
 
+/**
+ * Class implements interface Command, used to get log in page
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class GetLoginFormCommand implements Command {
     public static final ResponseContext LOGIN_PAGE = new ResponseContext() {
         @Override

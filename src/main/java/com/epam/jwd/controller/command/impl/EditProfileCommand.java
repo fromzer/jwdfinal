@@ -20,6 +20,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * Class implements interface Command, used to edit user profile
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class EditProfileCommand implements Command {
     public static final ResponseContext EDIT_PROFILE_PAGE = new ResponseContext() {
         @Override

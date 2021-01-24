@@ -10,6 +10,12 @@ import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * User validator implementation for edit user data process without password
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class UserValidatorEditWithoutPasswordImpl implements UserValidator {
 
     private static ReentrantLock reentrantLock = new ReentrantLock();

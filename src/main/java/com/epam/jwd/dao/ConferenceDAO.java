@@ -16,11 +16,18 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * DAO class used for working with Conference objects and modifying data
+ * in corresponding table
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class ConferenceDAO extends AbstractDAO<Long, Conference> {
     private static final Logger logger = LoggerFactory.getLogger(ConferenceDAO.class);
     private static final String SQL_SELECT_FIND_ALL = "SELECT c.id, c.title, c.description, c.start_date, c.end_date FROM conference c ORDER BY c.id DESC";
     private static final String SQL_SELECT_FIND_BY_ID = "SELECT c.id, c.title, c.description, c.start_date, c.end_date FROM conference c WHERE c.id=?";
-    private static final String SQL_SELECT_FIND_LIMIT = "SELECT c.id, c.title, c.description, c.start_date, c.end_date FROM conference c ORDER BY c.id DESC LIMIT ?, ?;";
+    private static final String SQL_SELECT_FIND_LIMIT = "SELECT c.id, c.title, c.description, c.start_date, c.end_date FROM conference c WHERE c.end_date > NOW() ORDER BY c.id DESC LIMIT ?, ?;";
     private static final String SQL_SELECT_COUNT = "SELECT COUNT(id) FROM conference;";
     private static final String SQL_DELETE_ENTITY = "DELETE FROM conference WHERE id =?;";
     private static final String SQL_CREATE_ENTITY = "INSERT INTO conference (title, description, start_date, end_date) VALUES (?, ?, ?, ?);";
@@ -28,7 +35,7 @@ public class ConferenceDAO extends AbstractDAO<Long, Conference> {
     private static final ReentrantLock reentrantLock = new ReentrantLock();
     private static final AtomicBoolean isCreated = new AtomicBoolean(false);
     private static ConferenceDAO instance;
-    private static ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     private ConferenceDAO() {
     }
@@ -95,6 +102,12 @@ public class ConferenceDAO extends AbstractDAO<Long, Conference> {
         return result;
     }
 
+    /**
+     * Find amount of conference entries in table
+     *
+     * @return amount of conferences
+     * @throws DaoException if fail to find data from DB
+     */
     public Long findAmountOfConferences() throws DaoException {
         long result;
         PreparedStatement statement = null;
@@ -117,6 +130,14 @@ public class ConferenceDAO extends AbstractDAO<Long, Conference> {
         return result;
     }
 
+    /**
+     * Find required entries of conference in table
+     *
+     * @param position from which start selecting records
+     * @param records  amount of records to be retrieved
+     * @return conference entries
+     * @throws DaoException if fail to find data from DB
+     */
     public List<Conference> findConferenceByLimit(Long position, Long records) throws DaoException {
         List<Conference> entities = new ArrayList<>();
         PreparedStatement statement = null;

@@ -17,6 +17,12 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Class implements interface Command, used to log in
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class LoginCommand implements Command {
     public static final ResponseContext MAIN_PAGE = new ResponseContext() {
         @Override

@@ -12,12 +12,19 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Service class is used for working with Message objects via DAO layer
+ * classes
+ *
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class MessageService implements Service<Message> {
     private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
     private static final ReentrantLock reentrantLock = new ReentrantLock();
     private static final AtomicBoolean isCreated = new AtomicBoolean(false);
     private static MessageService instance;
-    private MessageDAO messageDAO = MessageDAO.getInstance();
+    private final MessageDAO messageDAO = MessageDAO.getInstance();
 
     private MessageService() {
     }
@@ -37,30 +44,18 @@ public class MessageService implements Service<Message> {
         return instance;
     }
 
+    /**
+     * Get all messages
+     *
+     * @return List of Messages
+     * @throws ServiceException if fail to retrieve data from DB
+     */
     public List<Message> findAllNewMessage() throws ServiceException {
         try {
             return messageDAO.findAll();
         } catch (DaoException e) {
             logger.warn("Service findAllMessage error");
             throw new ServiceException("Service findAllMessage error: " + e);
-        }
-    }
-
-    public Message findMessageById(Long id) throws ServiceException {
-        try {
-            return messageDAO.findEntityById(id).orElseThrow();
-        } catch (DaoException e) {
-            logger.warn("Service findMessageById error");
-            throw new ServiceException("Service findMessageById error: " + e);
-        }
-    }
-
-    public List<Message> findAllMessageByUserId(Long userId) throws ServiceException {
-        try {
-            return messageDAO.findAllMessageByUserId(userId);
-        } catch (DaoException e) {
-            logger.warn("Service findAllMessageByUserId error");
-            throw new ServiceException("Service findAllMessageByUserId error: " + e);
         }
     }
 

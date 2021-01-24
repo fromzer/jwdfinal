@@ -3,13 +3,43 @@ package com.epam.jwd.domain.impl;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * User class describes a user web-app entity
+ * 
+ * @author Egor Miheev
+ * @version 1.0.0
+ */
 public class User extends AbstractBaseEntity implements Serializable {
     private static final long serialVersionUID = 7977384671981758716L;
+    
+    /**
+     * User login
+     */
     private String login;
+
+    /**
+     * User first name
+     */
     private String firstName;
+
+    /**
+     * User last name
+     */
     private String lastName;
+
+    /**
+     * User password
+     */
     private String password;
+
+    /**
+     * User email
+     */
     private String email;
+
+    /**
+     * User role - admin/user, etc
+     */
     private UserRole role;
 
     public String getLogin() {
