@@ -38,7 +38,7 @@ public class AddConferenceCommand implements Command {
     public static ResponseContext EDIT_SECTION_IN_CONFERENCE = new ResponseContext() {
         @Override
         public String getPage() {
-            return "/home?command=toEditConferencesPage";
+            return "/admin?command=toEditConferencesPage";
         }
 
         @Override

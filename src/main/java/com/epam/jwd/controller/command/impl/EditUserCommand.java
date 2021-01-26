@@ -42,7 +42,7 @@ public class EditUserCommand implements Command {
     public static ResponseContext USER_LIST_PAGE = new ResponseContext() {
         @Override
         public String getPage() {
-            return "/home?command=showAllUsers";
+            return "/admin?command=showAllUsers";
         }
 
         @Override

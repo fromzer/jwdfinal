@@ -23,7 +23,7 @@ public class DeleteRequestCommand implements Command {
     public static ResponseContext REQUEST_LIST_PAGE = new ResponseContext() {
         @Override
         public String getPage() {
-            return "/home?command=allUserRequests";
+            return "/user?command=allUserRequests";
         }
 
         @Override

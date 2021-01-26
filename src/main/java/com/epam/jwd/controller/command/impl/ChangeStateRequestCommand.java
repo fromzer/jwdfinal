@@ -33,7 +33,7 @@ public class ChangeStateRequestCommand implements Command {
     public static ResponseContext NEW_REQUEST_PAGE = new ResponseContext() {
         @Override
         public String getPage() {
-            return "/home?command=showNewRequests";
+            return "/admin?command=showNewRequests";
         }
 
         @Override

@@ -35,7 +35,7 @@ public class JoinSectionRequestCommand implements Command {
     public static ResponseContext SECTION_LIST_PAGE = new ResponseContext() {
         @Override
         public String getPage() {
-            return "/home?command=sections";
+            return "/user?command=sections";
         }
 
         @Override

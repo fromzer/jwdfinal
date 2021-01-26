@@ -20,7 +20,7 @@ public class DeleteConferenceCommand implements Command {
     public static ResponseContext EDIT_CONFERENCE_PAGE = new ResponseContext() {
         @Override
         public String getPage() {
-            return "/home?command=toEditConferencesPage";
+            return "/admin?command=toEditConferencesPage";
         }
 
         @Override

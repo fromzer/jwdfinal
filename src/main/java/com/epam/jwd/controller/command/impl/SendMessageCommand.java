@@ -51,7 +51,7 @@ public class SendMessageCommand implements Command {
     public static ResponseContext SHOW_NEW_MESSAGES = new ResponseContext() {
         @Override
         public String getPage() {
-            return "/home?command=messages";
+            return "/admin?command=messages";
         }
 
         @Override

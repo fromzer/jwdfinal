@@ -65,8 +65,8 @@ public class EditProfileCommand implements Command {
 
     @Override
     public ResponseContext execute(RequestContext requestContext) {
-        Locale locale = Locale.getDefault();
         HttpSession session = requestContext.getSession();
+        Locale locale = Locale.getDefault();
         User userScope = (User) session.getAttribute("currentUser");
         String login = userScope.getLogin();
         String firstName = requestContext.getParameter("firstName");
@@ -85,10 +85,10 @@ public class EditProfileCommand implements Command {
             requestContext.setAttribute("error", e.getMessage());
             return ERROR_PAGE;
         }
-        return getPage(requestContext, session, userScope, user, result, withoutPassword);
+        return getPage(requestContext, userScope, user, result, withoutPassword);
     }
 
-    private ResponseContext getPage(RequestContext requestContext, HttpSession session, User userScope, User user, List<Violation> result, boolean withoutPassword) {
+    private ResponseContext getPage(RequestContext requestContext, User userScope, User user, List<Violation> result, boolean withoutPassword) {
         try {
             if (result.isEmpty()) {
                 if (withoutPassword) {
@@ -96,7 +96,6 @@ public class EditProfileCommand implements Command {
                 } else {
                     service.update(user);
                 }
-                session.invalidate();
                 requestContext.getSession(true).setAttribute("currentUser", user);
             } else {
                 requestContext.setAttribute("entity", user);
