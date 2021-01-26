@@ -5,6 +5,7 @@ import com.epam.jwd.controller.command.RequestContext;
 import com.epam.jwd.controller.command.ResponseContext;
 
 import javax.servlet.http.HttpSession;
+import java.util.Locale;
 
 /**
  * Class implements interface Command, used to set language
@@ -27,10 +28,12 @@ public class SetLocaleCommand implements Command {
 
     @Override
     public ResponseContext execute(RequestContext requestContext) {
-        String locale = requestContext.getParameter("locale");
+        String localeScope = requestContext.getParameter("locale");
+        Locale locale;
         HttpSession session = requestContext.getSession(true);
-        if (locale != null && !locale.isEmpty()) {
-            switch (locale) {
+        if (localeScope != null && !localeScope.isEmpty()) {
+            locale = Locale.forLanguageTag(localeScope);
+            switch (localeScope) {
                 case "ru_RU":
                     session.setAttribute("locale", "ru_RU");
                     break;
@@ -42,8 +45,10 @@ public class SetLocaleCommand implements Command {
                     break;
             }
         } else {
+            locale = Locale.ENGLISH;
             session.setAttribute("locale", "en_US");
         }
+        Locale.setDefault(locale);
         return MAIN_PAGE;
     }
 }
