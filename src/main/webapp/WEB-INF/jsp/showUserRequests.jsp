@@ -5,22 +5,22 @@
 <fmt:bundle basename="pagecontent">
     <html>
     <head>
-        <title>Requests list</title>
+        <title><fmt:message key="request.page.title"/></title>
         <c:import url="parts/common.jsp"/>
     </head>
     <body>
     <div class="container">
         <c:import url="parts/navbar.jsp"/>
-        <h2>List Users</h2>
+        <h2><fmt:message key="request.page.title"/></h2>
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Conference</th>
-                <th>Section</th>
-                <th>Date start</th>
-                <th>Date end</th>
-                <th>State</th>
-                <th>Actions</th>
+                <th><fmt:message key="request.table.conference"/></th>
+                <th><fmt:message key="request.table.section"/></th>
+                <th><fmt:message key="request.table.dateStart"/></th>
+                <th><fmt:message key="request.table.dateEnd"/></th>
+                <th><fmt:message key="request.table.state"/></th>
+                <th><fmt:message key="request.table.actions"/></th>
             </tr>
             </thead>
             <tbody>
@@ -32,7 +32,7 @@
                     <td>${row.conference.dateEnd}</td>
                     <td>${row.userSection.state}</td>
                     <td>
-                        <a class="btn btn-primary" href="/home?command=deleteRequest&sectionId=${row.section.id}" role="button">Cancel</a>
+                        <a class="btn btn-primary" href="/user?command=deleteRequest&sectionId=${row.section.id}" role="button"><fmt:message key="page.button.cancel"/></a>
                     </td>
                 </tr>
             </c:forEach>

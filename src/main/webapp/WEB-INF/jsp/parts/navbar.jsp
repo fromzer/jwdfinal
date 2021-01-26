@@ -3,18 +3,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:bundle basename="pagecontent">
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <span class="navbar-brand"><fmt:message key="page.menu.title"/></span>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav mr-auto">
                     <li><a href="/home?command=main"><fmt:message key="page.menu.home"/></a></li>
                     <c:if test="${currentUser!=null}">
                         <li><a href="/user?command=allUserRequests"><fmt:message key="page.menu.request"/></a></li>
@@ -39,9 +34,9 @@
                         </li>
                     </c:if>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right mr-3">
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Lang<span class="caret"></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Lang<span class="caret"/></a>
                         <ul class="dropdown-menu lang" aria-labelledby="navbarDropdown">
                             <li><a href="/home?command=setLocale&locale=en_US">EN</a></li>
                             <li><a href="/home?command=setLocale&locale=ru_RU">RU</a></li>

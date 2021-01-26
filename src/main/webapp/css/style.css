@@ -162,3 +162,15 @@ fieldset {
 .card {
     box-shadow: 0 16px 48px #E3E7EB;
 }
+
+#myNavbar li {
+    margin-left: 22px;
+}
+
+#records {
+    width: 62px;
+}
+
+.small-height {
+    height: 10px;
+}

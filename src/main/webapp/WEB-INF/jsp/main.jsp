@@ -6,7 +6,7 @@
     <!doctype html>
     <html lang="en">
     <head>
-        <title>Main page</title>
+        <title><fmt:message key="main.title"/></title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <c:import url="parts/common.jsp"/>
@@ -17,8 +17,8 @@
         <div>
             <form action="/home?command=main">
                 <input type="hidden" name="currentPage" value="1">
-                <div class="form-group col-md-4">
-                    <label for="records">Select records per page:</label>
+                <div class="form-group col-md-4 small-height">
+                    <label for="records"><fmt:message key="main.paginator.select"/></label>
                     <select class="form-control" id="records" name="recordsPerPage" onchange="this.form.submit()">
                         <option value="5">5</option>
                         <option value="10">10</option>
@@ -28,16 +28,18 @@
             </form>
         </div>
         </br>
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-md-8 mt-3 left">
                 <c:forEach var="conference" items="${showConferences}">
                     <div class="card mb-4">
                         <div class="card-body">
                             <h2 class="card-title">${conference.title}</h2>
-                            <p class="card-text text-muted h6">Date start: ${conference.dateStart} | Date
-                                end: ${conference.dateEnd} </p>
+                            <p class="card-text text-muted h6"><fmt:message
+                                    key="main.conference.dateStart"/> ${conference.dateStart} | <fmt:message
+                                    key="main.conference.dateEnd"/> ${conference.dateEnd} </p>
                             <p class="card-text">${conference.description}</p>
-                            <a href="/home?command=sections&confId=${conference.id}" class="btn btn-primary">Read More
+                            <a href="/home?command=sections&confId=${conference.id}"
+                               class="btn btn-primary"><fmt:message key="main.conference.readMore"/>
                                 &rarr;</a>
                         </div>
                     </div>
@@ -46,10 +48,11 @@
         </div>
         <div>
             <nav aria-label="Navigation for conferences">
-                <ul class="pagination">
+                <ul class="pagination justify-content-center">
                     <c:if test="${currentPage != 1}">
                         <li class="page-item"><a class="page-link"
-                                                 href="/home?command=main&recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}">Previous</a>
+                                                 href="/home?command=main&recordsPerPage=${recordsPerPage}&currentPage=${currentPage-1}"><fmt:message
+                                key="main.paginator.previous"/></a>
                         </li>
                     </c:if>
                     <c:forEach begin="1" end="${numberOfPages}" var="i">
@@ -68,7 +71,8 @@
                     </c:forEach>
                     <c:if test="${currentPage lt numberOfPages}">
                         <li class="page-item"><a class="page-link"
-                                                 href="/home?command=main&recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}">Next</a>
+                                                 href="/home?command=main&recordsPerPage=${recordsPerPage}&currentPage=${currentPage+1}"><fmt:message
+                                key="main.paginator.next"/></a>
                         </li>
                     </c:if>
                 </ul>

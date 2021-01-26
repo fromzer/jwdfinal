@@ -12,33 +12,33 @@
     <body>
     <div class="container">
         <c:import url="parts/navbar.jsp"/>
-        <h4 align="center"><fmt:message key="message.page.title"/></h4>
-        <div class="d-flex flex-column center" align="center">
-            <form name="LoginForm" method="post" action="/user?command=addMessage">
-                <div class="mb-3">
-                    <label for="topicForm" class="form-label"><fmt:message key="message.label.topic"/></label>
-                    <input type="text" class="form-control <c:if test="${not empty validateResult}">is-invalid</c:if>"
+        <div class="form-container">
+            <form id="web-form" method="post" action="/user?command=addMessage">
+                <h3><fmt:message key="message.page.title"/></h3>
+                <fieldset>
+                    <label for="topicForm"><fmt:message key="message.label.topic"/></label>
+                    <input type="text" tabindex="1" class="<c:if test="${not empty validateResult}">is-invalid</c:if>"
                            id="topicForm"
                            value="<c:if test="${entity != null}">${entity.topic}</c:if>" name="topicForm"
-                           placeholder="<fmt:message key="message.topic.placeholder"/>" required/>
+                           placeholder="<fmt:message key="message.topic.placeholder"/>" required tabindex="1"/>
                     <div class="invalid-feedback">
                         <fnc:violationTag violationList="${validateResult}" fieldName="topic"/>
                     </div>
-                </div>
-                <div class="mb-3">
-                    <label for="textMessageForm" class="form-label"><fmt:message
-                            key="message.label.description"/></label>
+                </fieldset>
+                <fieldset>
+                    <label for="textMessageForm"><fmt:message key="message.label.description"/></label>
                     <textarea class="form-control <c:if test="${not empty validateResult}">is-invalid</c:if>"
                               id="textMessageForm" name="textMessageForm" rows="7"
                               placeholder="<fmt:message key="message.description.placeholder"/>" required><c:if
                             test="${entity != null}">${entity.description}</c:if></textarea>
                     <div class="invalid-feedback">
-                        <fnc:violationTag violationList="${validateResult}" fieldName="description"/>
+                        <fnc:violationTag violationList="${validateResult}" fieldName="message"/>
                     </div>
-                </div>
-                </br>
-                <input type="submit" class="btn btn-primary" value="<fmt:message key="page.button.send"/>"/>
-                </br>
+                </fieldset>
+                <fieldset>
+                    <button name="submit" type="submit" id="web-form-submit" data-submit="...Sending"><fmt:message
+                            key="page.button.send"/></button>
+                </fieldset>
             </form>
         </div>
     </div>

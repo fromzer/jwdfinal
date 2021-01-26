@@ -5,33 +5,33 @@
 <fmt:bundle basename="pagecontent">
     <html>
     <head>
-        <title>Edit Conferences</title>
+        <title><fmt:message key="conference.edit.title"/></title>
         <c:import url="parts/common.jsp"/>
     </head>
     <body>
     <div class="container">
         <c:import url="parts/navbar.jsp"/>
-        <h4><fmt:message key="page.view.conference.listTitle"/></h4>
-        <a href="/home?command=toCreateConferencePage" class="btn btn-primary"><fmt:message
-                key="page.button.create"/> </a>
-        <div class="list-group">
-            <c:forEach var="row" items="${showConferences}">
-                <a href="/home?command=toEditSections&confId=${row.id}" class="list-group-item list-group-item-action"
-                   aria-current="true">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">${row.title}</h5>
+        <div class="row justify-content-center">
+            <div class="col-md-8 mt-3 left">
+                <h4><fmt:message key="page.view.conference.listTitle"/></h4>
+                <a href="/admin?command=toCreateConferencePage" class="btn btn-primary"><fmt:message
+                        key="page.button.create"/> </a>
+                <c:forEach var="conference" items="${showConferences}">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h2 class="card-title">${conference.title}</h2>
+                            <p class="card-text text-muted h6"><fmt:message key="main.conference.dateStart"/> ${conference.dateStart} | <fmt:message key="main.conference.dateEnd"/> ${conference.dateEnd} </p>
+                            <p class="card-text">${conference.description}</p>
+                            <a href="/admin?command=toEditSections&confId=${conference.id}" class="btn btn-primary"><fmt:message
+                                    key="section.views.title"/></a>
+                            <a href="/admin?command=editConference&confId=${conference.id}" class="btn btn-warning"><fmt:message
+                                    key="page.button.edit"/></a>
+                            <a href="/admin?command=deleteConference&confId=${conference.id}" class="btn btn-danger"><fmt:message
+                                    key="page.button.delete"/></a>
+                        </div>
                     </div>
-                    <p class="mb-1">${row.description}</p>
-                    <div>
-                        <small><p>Date start: ${row.dateStart}</p></small>
-                        <small><p>Date end: ${row.dateEnd}</p></small>
-                    </div>
-                    <a href="/home?command=editConference&confId=${row.id}" class="btn btn-primary"><fmt:message
-                            key="page.button.edit"/></a>
-                    <a href="/home?command=deleteConference&confId=${row.id}" class="btn btn-primary"><fmt:message
-                            key="page.button.delete"/></a>
-                </a>
-            </c:forEach>
+                </c:forEach>
+            </div>
         </div>
     </div>
     </body>

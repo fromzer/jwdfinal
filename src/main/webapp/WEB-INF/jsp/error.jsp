@@ -5,7 +5,7 @@
 <fmt:bundle basename="pagecontent">
     <html>
     <head>
-        <title>Error page</title>
+        <title><fmt:message key="error.page.title"/></title>
         <c:import url="parts/common.jsp"/>
     </head>
     <body>
@@ -14,9 +14,9 @@
         <div class="row">
             <div class="col-8">
                 <div class="alert alert-warning" role="alert">
-                    <h4 class="alert-heading">Sorry</h4>
+                    <h4 class="alert-heading"><fmt:message key="error.page.sorry"/></h4>
                     <hr>
-                    <p align="center">Что-то пошло не так =)</p>
+                    <p align="center"><fmt:message key="error.page.message"/></p>
                     <hr>
                     <c:if test="${ not empty error }">
                         <p class="mb-0"><c:out value="message:: ${ error.toString() }"/></p>
@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="col-2">
-                <p class="center"><a href="/home?command=main">Back to main</a></p>
+                <p class="center"><a href="/home?command=main"><fmt:message key="page.inscription.back"/></a></p>
             </div>
         </div>
     </div>

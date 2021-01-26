@@ -5,23 +5,23 @@
 <fmt:bundle basename="pagecontent">
     <html>
     <head>
-        <title>New user requests</title>
+        <title><fmt:message key="request.page.title.new"/></title>
         <c:import url="parts/common.jsp"/>
     </head>
     <body>
     <div class="container">
         <c:import url="parts/navbar.jsp"/>
-        <h2>New requests</h2>
+        <h2><fmt:message key="request.page.title"/></h2>
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>User</th>
-                <th>Conference</th>
-                <th>Section</th>
-                <th>Date start</th>
-                <th>Date end</th>
-                <th>State</th>
-                <th>Actions</th>
+                <th><fmt:message key="request.table.user"/></th>
+                <th><fmt:message key="request.table.conference"/></th>
+                <th><fmt:message key="request.table.section"/></th>
+                <th><fmt:message key="request.table.dateStart"/></th>
+                <th><fmt:message key="request.table.dateEnd"/></th>
+                <th><fmt:message key="request.table.state"/></th>
+                <th><fmt:message key="request.table.actions"/></th>
             </tr>
             </thead>
             <tbody>
@@ -32,16 +32,16 @@
                     <td>${row.section.title}</td>
                     <td>${row.conference.dateStart}</td>
                     <td>${row.conference.dateEnd}</td>
-                    <form action="/home?command=changeStateRequest&userSectionId=${row.userSection.id}&sectionId=${row.section.id}&userId=${row.user.id}" method="post">
+                    <form action="/admin?command=changeStateRequest&userSectionId=${row.userSection.id}&sectionId=${row.section.id}&userId=${row.user.id}" method="post">
                         <td>
                             <select id="states" name="states">
-                                <option value="1">Considered</option>
-                                <option value="2">Confirm</option>
-                                <option value="3">Reject</option>
+                                <option value="1"><fmt:message key="request.state.considered"/></option>
+                                <option value="2"><fmt:message key="request.state.confirm"/></option>
+                                <option value="3"><fmt:message key="request.state.reject"/></option>
                             </select>
                         </td>
                         <td>
-                            <button name="submit" type="submit" id="web-form-submit" data-submit="...Sending">Update</button>
+                            <button name="submit" class="btn btn-primary" type="submit" id="web-form-submit" data-submit="...Sending"><fmt:message key="page.button.update"/></button>
                         </td>
                     </form>
                 </tr>
