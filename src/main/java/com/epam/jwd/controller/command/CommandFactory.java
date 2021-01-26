@@ -39,6 +39,8 @@ public class CommandFactory {
                 return new GetEditSectionFormCommand();
             case "saveChangeUserAccount":
                 return new EditUserCommand();
+            case "saveSection":
+                return new UpdateSectionCommand();
             case "saveConference":
                 return new UpdateConferenceCommand();
             case "profile":
