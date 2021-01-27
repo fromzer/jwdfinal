@@ -30,7 +30,7 @@ public class UserSectionDAO extends AbstractDAO<Long, UserSection> {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final String SQL_SELECT_FIND_ALL = "SELECT us.id, us.user_id, us.section_id, us.state_id FROM users_sections us WHERE state_id = 1 ORDER BY us.id;";
     private static final String SQL_SELECT_FIND_BY_ID = "SELECT us.id, us.user_id, us.section_id, us.state_id FROM users_sections us WHERE us.id = ?;";
-    private static final String SQL_SELECT_FIND_BY_USER_ID = "SELECT us.id, us.user_id, us.section_id, us.state_id FROM users_sections us WHERE us.user_id = ?;";
+    private static final String SQL_SELECT_FIND_BY_USER_ID = "SELECT us.id, us.user_id, us.section_id, us.state_id FROM users_sections us WHERE us.user_id = ? ORDER BY us.id DESC;";
     private static final String SQL_DELETE_ENTITY = "DELETE FROM users_sections WHERE user_id = ? and section_id = ?;";
     private static final String SQL_CREATE_ENTITY = "INSERT INTO users_sections(user_id, section_id, state_id) VALUES (?, ?, ?);";
     private static final String SQL_UPDATE_ENTITY = "UPDATE users_sections SET user_id = ?, section_id = ?, state_id = ? WHERE id = ?;";

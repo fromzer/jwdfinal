@@ -29,26 +29,27 @@ public class SetLocaleCommand implements Command {
     @Override
     public ResponseContext execute(RequestContext requestContext) {
         String localeScope = requestContext.getParameter("locale");
-        Locale locale;
         HttpSession session = requestContext.getSession(true);
+        String lang = localeScope;
         if (localeScope != null && !localeScope.isEmpty()) {
-            locale = Locale.forLanguageTag(localeScope);
             switch (localeScope) {
                 case "ru_RU":
                     session.setAttribute("locale", "ru_RU");
+                    lang="ru_RU";
                     break;
                 case "ru_BY":
                     session.setAttribute("locale", "ru_BY");
+                    lang="ru_BY";
                     break;
                 default:
                     session.setAttribute("locale", "en_US");
+                    lang="en_US";
                     break;
             }
-        } else {
-            locale = Locale.ENGLISH;
-            session.setAttribute("locale", "en_US");
         }
-        Locale.setDefault(locale);
+        if (lang != null) {
+            Locale.setDefault(new Locale(lang));
+        }
         return MAIN_PAGE;
     }
 }

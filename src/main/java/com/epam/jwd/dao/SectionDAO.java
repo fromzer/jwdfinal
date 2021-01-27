@@ -30,7 +30,7 @@ public class SectionDAO extends AbstractDAO<Long, Section> {
     private static final String SQL_DELETE_ENTITY = "DELETE FROM section WHERE id =?;";
     private static final String SQL_CREATE_ENTITY = "INSERT INTO section(title, description, conference_id) VALUES (?, ?, ?);";
     private static final String SQL_UPDATE_ENTITY = "UPDATE section SET title=?, description=? WHERE id = ?";
-    private static final String SQL_SELECT_FIND_BY_CONFERENCE_ID = "SELECT sn.id, sn.title, sn.description, sn.conference_id FROM section sn WHERE sn.conference_id = ?;";
+    private static final String SQL_SELECT_FIND_BY_CONFERENCE_ID = "SELECT sn.id, sn.title, sn.description, sn.conference_id FROM section sn WHERE sn.conference_id = ? ORDER BY sn.id DESC;";
     private static final ReentrantLock reentrantLock = new ReentrantLock();
     private static final AtomicBoolean isCreated = new AtomicBoolean(false);
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
