@@ -13,6 +13,19 @@ CREATE TABLE `app_user` (
   `role_id` bigint NOT NULL DEFAULT '2',
   PRIMARY KEY (`id`),
   UNIQUE KEY `app_user_login_uindex` (`login`)
+  KEY `app_user_user_role_id_fk` (`role_id`),
+  CONSTRAINT `app_user_user_role_id_fk` FOREIGN KEY (`role_id`) REFERENCES `user_role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+--
+-- Table structure for table `user_role`
+--
+DROP TABLE IF EXISTS `user_role`;
+CREATE TABLE `user_role` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `role` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_role_role_uindex` (`role`)
 );
 
 --
