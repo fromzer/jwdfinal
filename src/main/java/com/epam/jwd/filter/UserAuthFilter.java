@@ -28,9 +28,8 @@ public class UserAuthFilter implements Filter {
         HttpServletResponse servletResponse = (HttpServletResponse) response;
         HttpSession session = servletRequest.getSession();
         User user = (User) session.getAttribute("currentUser");
-        boolean isLoggedIn = (user != null);
-        if (!isLoggedIn)
-            servletResponse.sendRedirect("/home?command=errorAuth");
+        if (user == null)
+            servletResponse.sendRedirect("/home?command=main");
         else {
             chain.doFilter(request, response);
         }

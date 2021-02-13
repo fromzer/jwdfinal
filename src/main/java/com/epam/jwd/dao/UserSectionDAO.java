@@ -59,10 +59,8 @@ public class UserSectionDAO extends AbstractDAO<Long, UserSection> {
     @Override
     public boolean create(UserSection entity) throws DaoException {
         boolean result;
-        PreparedStatement statement = null;
-        ProxyConnection connection = connectionPool.getConnection();
-        try {
-            statement = connection.prepareStatement(SQL_CREATE_ENTITY);
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_CREATE_ENTITY)) {
             statement.setLong(1, entity.getUserId());
             statement.setLong(2, entity.getSectionId());
             statement.setLong(3, entity.getState().getId());
@@ -70,9 +68,6 @@ public class UserSectionDAO extends AbstractDAO<Long, UserSection> {
         } catch (SQLException e) {
             logger.warn("Request create execution error.");
             throw new DaoException("Creation error: ", e);
-        } finally {
-            close(statement);
-            close(connection);
         }
         logger.debug("Request create entity complete: " + entity.getClass().getName());
         return result;
@@ -81,10 +76,8 @@ public class UserSectionDAO extends AbstractDAO<Long, UserSection> {
     @Override
     public boolean update(UserSection entity) throws DaoException {
         boolean result;
-        PreparedStatement statement = null;
-        ProxyConnection connection = connectionPool.getConnection();
-        try {
-            statement = connection.prepareStatement(SQL_UPDATE_ENTITY);
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ENTITY)) {
             statement.setLong(1, entity.getUserId());
             statement.setLong(2, entity.getSectionId());
             statement.setLong(3, entity.getState().getId());
@@ -93,9 +86,6 @@ public class UserSectionDAO extends AbstractDAO<Long, UserSection> {
         } catch (SQLException e) {
             logger.warn("Request update execution error.");
             throw new DaoException("Update error: ", e);
-        } finally {
-            close(statement);
-            close(connection);
         }
         logger.debug("Request update entity complete: " + entity.getClass().getName());
         return result;
@@ -110,23 +100,16 @@ public class UserSectionDAO extends AbstractDAO<Long, UserSection> {
      */
     public List<UserSection> findByUserId(Long id) throws DaoException {
         List<UserSection> userSectionList = new ArrayList<>();
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        try {
-            statement = connection.prepareStatement(SQL_SELECT_FIND_BY_USER_ID);
+        try (ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_FIND_BY_USER_ID)) {
             statement.setLong(1, id);
-            resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 userSectionList.add(createEntity(resultSet));
             }
         } catch (SQLException e) {
             logger.warn("Request find execution error.");
             throw new DaoException("Error: ", e);
-        } finally {
-            close(resultSet);
-            close(statement);
-            close(connection);
         }
         logger.debug("Request find complete.");
         return userSectionList;
@@ -150,19 +133,14 @@ public class UserSectionDAO extends AbstractDAO<Long, UserSection> {
     @Override
     public boolean delete(UserSection entity) throws DaoException {
         boolean result;
-        PreparedStatement statement = null;
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        try {
-            statement = connection.prepareStatement(getDeleteQuery());
+        try (ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(getDeleteQuery())) {
             statement.setLong(1, entity.getUserId());
             statement.setLong(2, entity.getSectionId());
             result = statement.executeUpdate() > 0;
         } catch (SQLException e) {
             logger.warn("Request execution error.");
             throw new DaoException("Delete error: ", e);
-        } finally {
-            close(statement);
-            close(connection);
         }
         logger.debug("Request delete entity complete: " + entity.toString());
         return result;

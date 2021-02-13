@@ -58,10 +58,8 @@ public class ConferenceDAO extends AbstractDAO<Long, Conference> {
     @Override
     public boolean create(Conference entity) throws DaoException {
         boolean result;
-        PreparedStatement statement = null;
-        ProxyConnection connection = connectionPool.getConnection();
-        try {
-            statement = connection.prepareStatement(SQL_CREATE_ENTITY);
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_CREATE_ENTITY)) {
             statement.setString(1, entity.getTitle());
             statement.setString(2, entity.getDescription());
             statement.setDate(3, Date.valueOf(entity.getDateStart()));
@@ -70,9 +68,6 @@ public class ConferenceDAO extends AbstractDAO<Long, Conference> {
         } catch (SQLException e) {
             logger.warn("Request create execution error.");
             throw new DaoException("Creation error: ", e);
-        } finally {
-            close(statement);
-            close(connection);
         }
         logger.debug("Request create entity complete: " + entity.getClass().getName());
         return result;
@@ -81,10 +76,8 @@ public class ConferenceDAO extends AbstractDAO<Long, Conference> {
     @Override
     public boolean update(Conference entity) throws DaoException {
         boolean result;
-        PreparedStatement statement = null;
-        ProxyConnection connection = connectionPool.getConnection();
-        try {
-            statement = connection.prepareStatement(SQL_UPDATE_ENTITY);
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ENTITY)) {
             statement.setString(1, entity.getTitle());
             statement.setString(2, entity.getDescription());
             statement.setDate(3, Date.valueOf(entity.getDateStart()));
@@ -94,9 +87,6 @@ public class ConferenceDAO extends AbstractDAO<Long, Conference> {
         } catch (SQLException e) {
             logger.warn("Request update user execution error.");
             throw new DaoException("Update error: ", e);
-        } finally {
-            close(statement);
-            close(connection);
         }
         logger.debug("Request update entity complete: " + entity.getClass().getName());
         return result;
@@ -110,21 +100,14 @@ public class ConferenceDAO extends AbstractDAO<Long, Conference> {
      */
     public Long findAmountOfConferences() throws DaoException {
         long result;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        try {
-            statement = connection.prepareStatement(SQL_SELECT_COUNT);
-            resultSet = statement.executeQuery();
+        try (ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_COUNT);
+             ResultSet resultSet = statement.executeQuery()) {
             resultSet.next();
             result = resultSet.getLong(1);
         } catch (SQLException e) {
             logger.warn("Request count execution error.");
             throw new DaoException("Error: ", e);
-        } finally {
-            close(resultSet);
-            close(statement);
-            close(connection);
         }
         logger.debug("Request find count complete.");
         return result;
@@ -140,24 +123,17 @@ public class ConferenceDAO extends AbstractDAO<Long, Conference> {
      */
     public List<Conference> findConferenceByLimit(Long position, Long records) throws DaoException {
         List<Conference> entities = new ArrayList<>();
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        try {
-            statement = connection.prepareStatement(SQL_SELECT_FIND_LIMIT);
+        try (ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_FIND_LIMIT)) {
             statement.setLong(1, position);
             statement.setLong(2, records);
-            resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 entities.add(createEntity(resultSet));
             }
         } catch (SQLException e) {
             logger.warn("Request findAll execution error.", e);
             throw new DaoException("Error: ", e);
-        } finally {
-            close(resultSet);
-            close(statement);
-            close(connection);
         }
         logger.debug("Request find conference by limit complete.");
         return entities;

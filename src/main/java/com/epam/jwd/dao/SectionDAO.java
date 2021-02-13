@@ -63,23 +63,16 @@ public class SectionDAO extends AbstractDAO<Long, Section> {
      */
     public List<Section> findEntityByConferenceId(Long id) throws DaoException {
         List<Section> sections = new ArrayList<>();
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        try {
-            statement = connection.prepareStatement(SQL_SELECT_FIND_BY_CONFERENCE_ID);
+        try (ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_FIND_BY_CONFERENCE_ID)) {
             statement.setLong(1, id);
-            resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 sections.add(createEntity(resultSet));
             }
         } catch (SQLException e) {
             logger.warn("Request findEntityById execution error.");
             throw new DaoException("Error: ", e);
-        } finally {
-            close(resultSet);
-            close(statement);
-            close(connection);
         }
         logger.debug("Request find entity by id complete.");
         return sections;
@@ -88,10 +81,8 @@ public class SectionDAO extends AbstractDAO<Long, Section> {
     @Override
     public boolean create(Section entity) throws DaoException {
         boolean result;
-        PreparedStatement statement = null;
-        ProxyConnection connection = connectionPool.getConnection();
-        try {
-            statement = connection.prepareStatement(SQL_CREATE_ENTITY);
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_CREATE_ENTITY)) {
             statement.setString(1, entity.getTitle());
             statement.setString(2, entity.getDescription());
             statement.setLong(3, entity.getConferenceId());
@@ -99,9 +90,6 @@ public class SectionDAO extends AbstractDAO<Long, Section> {
         } catch (SQLException e) {
             logger.warn("Request create execution error.");
             throw new DaoException("Creation error: ", e);
-        } finally {
-            close(statement);
-            close(connection);
         }
         logger.debug("Request create entity complete: " + entity.getClass().getName());
         return result;
@@ -110,10 +98,8 @@ public class SectionDAO extends AbstractDAO<Long, Section> {
     @Override
     public boolean update(Section entity) throws DaoException {
         boolean result;
-        PreparedStatement statement = null;
-        ProxyConnection connection = connectionPool.getConnection();
-        try {
-            statement = connection.prepareStatement(SQL_UPDATE_ENTITY);
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ENTITY)) {
             statement.setString(1, entity.getTitle());
             statement.setString(2, entity.getDescription());
             statement.setLong(3, entity.getId());
@@ -121,9 +107,6 @@ public class SectionDAO extends AbstractDAO<Long, Section> {
         } catch (SQLException e) {
             logger.warn("Request update execution error.");
             throw new DaoException("Update error: ", e);
-        } finally {
-            close(statement);
-            close(connection);
         }
         logger.debug("Request update entity complete: " + entity.getClass().getName());
         return result;

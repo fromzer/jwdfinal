@@ -49,22 +49,15 @@ public abstract class AbstractDAO<K, T extends BaseEntity> {
      */
     public List<T> findAll() throws DaoException {
         List<T> entities = new ArrayList<>();
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        try {
-            statement = connection.prepareStatement(getFindAllQuery());
-            resultSet = statement.executeQuery();
+        try (ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(getFindAllQuery());
+             ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 entities.add(createEntity(resultSet));
             }
         } catch (SQLException e) {
             logger.warn("Request findAll execution error.");
             throw new DaoException("Error: ", e);
-        } finally {
-            close(resultSet);
-            close(statement);
-            close(connection);
         }
         logger.debug("Statement findAll complete");
         return entities;
@@ -78,22 +71,15 @@ public abstract class AbstractDAO<K, T extends BaseEntity> {
      */
     public Optional<T> findEntityById(K id) throws DaoException {
         T entity;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        try {
-            statement = connection.prepareStatement(getFindByIdQuery());
+        try (ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(getFindByIdQuery())) {
             statement.setLong(1, (Long) id);
-            resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             resultSet.next();
             entity = createEntity(resultSet);
         } catch (SQLException e) {
             logger.warn("Request find entity by id execution error.");
             throw new DaoException("Error: ", e);
-        } finally {
-            close(resultSet);
-            close(statement);
-            close(connection);
         }
         logger.debug("Request find entity by id complete");
         return Optional.of(entity);
@@ -107,18 +93,13 @@ public abstract class AbstractDAO<K, T extends BaseEntity> {
      */
     public boolean delete(T entity) throws DaoException {
         boolean result;
-        PreparedStatement statement = null;
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        try {
-            statement = connection.prepareStatement(getDeleteQuery());
+        try (ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(getDeleteQuery())) {
             statement.setLong(1, entity.getId());
             result = statement.executeUpdate() > 0;
         } catch (SQLException e) {
             logger.warn("Request execution error.");
             throw new DaoException("Delete error: ", e);
-        } finally {
-            close(statement);
-            close(connection);
         }
         logger.debug("Request delete entity complete: " + entity.toString());
         return result;
@@ -151,45 +132,4 @@ public abstract class AbstractDAO<K, T extends BaseEntity> {
      * @return sql statement
      */
     protected abstract T createEntity(ResultSet resultSet) throws DaoException;
-
-    /**
-     * Close prepared statement
-     *
-     * @param st to be closed
-     */
-    public void close(PreparedStatement st) {
-        try {
-            if (st != null) {
-                st.close();
-            }
-        } catch (SQLException e) {
-            logger.warn("Failed to close prepared statement.");
-        }
-    }
-
-    /**
-     * Return connection in DB connection pool
-     *
-     * @param connection to be returned
-     */
-    public void close(ProxyConnection connection) {
-        if (connection != null) {
-            connection.close();
-        }
-    }
-
-    /**
-     * Close result set
-     *
-     * @param rs to be closed
-     */
-    public void close(ResultSet rs) {
-        if (rs != null) {
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                logger.warn("Failed to close result set.");
-            }
-        }
-    }
 }

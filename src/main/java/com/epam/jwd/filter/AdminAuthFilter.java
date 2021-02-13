@@ -28,16 +28,14 @@ public class AdminAuthFilter implements Filter {
         HttpServletResponse servletResponse = (HttpServletResponse) response;
         HttpSession session = servletRequest.getSession();
         User user = (User) session.getAttribute("currentUser");
-        boolean isLoggedIn = (user != null && user.getRole().equals(UserRole.ADMIN));
-        if (!isLoggedIn)
-            servletResponse.sendRedirect("/home?command=errorAuth");
-        else {
+        if (user != null && user.getRole().equals(UserRole.ADMIN))
             chain.doFilter(request, response);
+        else {
+            servletResponse.sendRedirect("/home?command=main");
         }
     }
 
     @Override
     public void destroy() {
-
     }
 }

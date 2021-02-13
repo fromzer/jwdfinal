@@ -56,10 +56,8 @@ public class MessageDAO extends AbstractDAO<Long, Message> {
     @Override
     public boolean create(Message entity) throws DaoException {
         boolean result;
-        PreparedStatement statement = null;
-        ProxyConnection connection = connectionPool.getConnection();
-        try {
-            statement = connection.prepareStatement(SQL_CREATE_ENTITY);
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_CREATE_ENTITY)) {
             statement.setString(1, entity.getTopic());
             statement.setString(2, entity.getDescription());
             statement.setLong(3, entity.getUserId());
@@ -67,9 +65,6 @@ public class MessageDAO extends AbstractDAO<Long, Message> {
         } catch (SQLException e) {
             logger.warn("Request create execution error.");
             throw new DaoException("Creation error: ", e);
-        } finally {
-            close(statement);
-            close(connection);
         }
         logger.debug("Request create entity complete: " + entity.getClass().getName());
         return result;
@@ -78,19 +73,14 @@ public class MessageDAO extends AbstractDAO<Long, Message> {
     @Override
     public boolean update(Message message) throws DaoException {
         boolean result;
-        PreparedStatement statement = null;
-        ProxyConnection connection = connectionPool.getConnection();
-        try {
-            statement = connection.prepareStatement(SQL_UPDATE_ENTITY);
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ENTITY)) {
             statement.setBoolean(1, message.isAnswered());
             statement.setLong(2, message.getId());
             result = statement.executeUpdate() > 0;
         } catch (SQLException e) {
             logger.warn("Request update execution error.");
             throw new DaoException("Update error: ", e);
-        } finally {
-            close(statement);
-            close(connection);
         }
         logger.debug("Request update state message complete");
         return result;
@@ -105,23 +95,16 @@ public class MessageDAO extends AbstractDAO<Long, Message> {
      */
     public List<Message> findAllMessageByUserId(Long userId) throws DaoException {
         List<Message> entities = new ArrayList<>();
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        try {
-            statement = connection.prepareStatement(SQL_SELECT_FIND_BY_USER_ID);
+        try (ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_FIND_BY_USER_ID)) {
             statement.setLong(1, userId);
-            resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 entities.add(createEntity(resultSet));
             }
         } catch (SQLException e) {
             logger.warn("Request find entity by id execution error.");
             throw new DaoException("Error: ", e);
-        } finally {
-            close(resultSet);
-            close(statement);
-            close(connection);
         }
         logger.debug("Request find entity by id complete.");
         return entities;

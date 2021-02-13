@@ -70,22 +70,15 @@ public class UserDAO extends AbstractDAO<Long, User> {
      */
     public Optional<User> findEntityByLogin(String login) throws DaoException {
         User entity;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        try {
-            statement = connection.prepareStatement(SQL_SELECT_FIND_BY_LOGIN);
+        try (ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_FIND_BY_LOGIN)) {
             statement.setString(1, login);
-            resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             resultSet.next();
             entity = createEntity(resultSet);
         } catch (SQLException e) {
             logger.warn("Request findEntityByLogin execution error.");
             throw new DaoException("Error: ", e);
-        } finally {
-            close(resultSet);
-            close(statement);
-            close(connection);
         }
         logger.debug("Request find entity by login complete.");
         return Optional.ofNullable(entity);
@@ -94,11 +87,9 @@ public class UserDAO extends AbstractDAO<Long, User> {
     @Override
     public boolean create(User entity) throws DaoException {
         boolean result;
-        PreparedStatement statement = null;
         String md5HexPassword = DigestUtils.md5Hex(entity.getPassword());
-        ProxyConnection connection = connectionPool.getConnection();
-        try {
-            statement = connection.prepareStatement(SQL_CREATE_ENTITY);
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_CREATE_ENTITY)) {
             statement.setString(1, entity.getLogin());
             statement.setString(2, entity.getFirstName());
             statement.setString(3, entity.getLastName());
@@ -110,9 +101,6 @@ public class UserDAO extends AbstractDAO<Long, User> {
         } catch (SQLException e) {
             logger.warn("Request create execution error.");
             throw new DaoException("Creation error: ", e);
-        } finally {
-            close(statement);
-            close(connection);
         }
         logger.debug("Request create entity complete: " + entity.getClass().getName());
         return result;
@@ -121,11 +109,9 @@ public class UserDAO extends AbstractDAO<Long, User> {
     @Override
     public boolean update(User entity) throws DaoException {
         boolean result;
-        PreparedStatement statement = null;
-        ProxyConnection connection = connectionPool.getConnection();
         String md5HexPassword = DigestUtils.md5Hex(entity.getPassword());
-        try {
-            statement = connection.prepareStatement(SQL_UPDATE_ENTITY);
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_ENTITY)) {
             statement.setString(1, entity.getFirstName());
             statement.setString(2, entity.getLastName());
             statement.setString(3, md5HexPassword);
@@ -138,9 +124,6 @@ public class UserDAO extends AbstractDAO<Long, User> {
         } catch (SQLException e) {
             logger.warn("Request update execution error.");
             throw new DaoException("Update error: ", e);
-        } finally {
-            close(statement);
-            close(connection);
         }
         logger.debug("Request update entity complete: " + entity.getClass().getName());
         return result;
@@ -155,10 +138,8 @@ public class UserDAO extends AbstractDAO<Long, User> {
      */
     public boolean updateWithoutPassword(User entity) throws DaoException {
         boolean result;
-        PreparedStatement statement = null;
-        ProxyConnection connection = connectionPool.getConnection();
-        try {
-            statement = connection.prepareStatement(SQL_UPDATE_WITHOUT_PASSWORD_ENTITY);
+        try (ProxyConnection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_WITHOUT_PASSWORD_ENTITY)) {
             statement.setString(1, entity.getFirstName());
             statement.setString(2, entity.getLastName());
             statement.setString(3, entity.getEmail());
@@ -170,9 +151,6 @@ public class UserDAO extends AbstractDAO<Long, User> {
         } catch (SQLException e) {
             logger.warn("Request update execution error.");
             throw new DaoException("Update error: ", e);
-        } finally {
-            close(statement);
-            close(connection);
         }
         logger.debug("Request update entity complete: " + entity.getClass().getName());
         return result;
@@ -187,21 +165,14 @@ public class UserDAO extends AbstractDAO<Long, User> {
      */
     public boolean isExistUser(String login) throws DaoException {
         boolean result;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        try {
-            statement = connection.prepareStatement(SQL_FIND_USER, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        try (ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
             statement.setString(1, login);
-            resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             result = resultSet.first();
         } catch (SQLException e) {
             logger.warn("Request isExistUser execution error.");
             throw new DaoException("Error: ", e);
-        } finally {
-            close(resultSet);
-            close(statement);
-            close(connection);
         }
         logger.debug("Request isExistUser complete.");
         return result;
@@ -216,23 +187,16 @@ public class UserDAO extends AbstractDAO<Long, User> {
      */
     public Optional<String> findPasswordByLogin(String login) throws DaoException {
         String pass = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        try {
-            statement = connection.prepareStatement(SQL_SELECT_FIND_LOGIN_BY_PASSWORD);
+        try (ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_FIND_LOGIN_BY_PASSWORD)) {
             statement.setString(1, login);
-            resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 pass = resultSet.getString(1);
             }
         } catch (SQLException e) {
             logger.warn("Request find password execution error.");
             throw new DaoException("Error: ", e);
-        } finally {
-            close(resultSet);
-            close(statement);
-            close(connection);
         }
         logger.debug("Request find password complete.");
         return Optional.ofNullable(pass);
